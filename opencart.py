@@ -54,6 +54,31 @@ def bonus_post():
     }
     data_oc = json.dumps(data, ensure_ascii=False).encode('utf8')
     url_post = requests.post(url, headers=headers_auth, data=data_oc)
+    
+# PUT запрос для обновления данных
+def bonus_put():
+    """
+    Данные передаются в JSON
+
+    В url указываем id транзакции если сделка совершена не верно или информация не точна.
+
+    'customer_id': 1, - идентификатор пользователя в системе Opencart (int) * важно
+    'order_id': 0, - если заказ совершен в интернет магазине, передается id заказа (int) необязательно
+    'description': 'Пополнение', - описание операции Пополнение, списание и т.д (str) * важно
+    'points': 200, - сумма операции, принимает как положительное так и отрицательное число(example: -200) (int) * важно
+    'date_added': '' - Время совершенной операции, если не указать,сортировка будет сбита (str) * важно
+    """
+    today = datetime.datetime.today()
+    data = {
+        # 'customer_reward_id': 1, не нужно
+        'customer_id': 7,
+        'order_id': 0,
+        'description': 'Обновление бонуса',
+        'points': 500,
+        'date_added': f'{ today.strftime("%Y-%m-%d %H:%M:%S") }'
+    }
+    data_oc = json.dumps(data, ensure_ascii=False).encode('utf8')
+    url_put = requests.put(url + '/1', headers=headers_auth, data=data_oc)
 
 
 def bonus_delete():
